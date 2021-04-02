@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PMML version="4.1" xmlns="http://www.dmg.org/PMML-4_1">
+	<Header copyright="KNIME">
+		<Application name="KNIME" version="2.8.0"/>
+	</Header>
+	<DataDictionary numberOfFields="13">
+		<DataField name="age" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="2.90000000000000E+001" rightMargin="7.70000000000000E+001"/>
+		</DataField>
+		<DataField name="sexe" optype="categorical" dataType="string">
+			<Value value="masculin"/>
+			<Value value="feminin"/>
+		</DataField>
+		<DataField name="type_douleur" optype="categorical" dataType="string">
+			<Value value="D"/>
+			<Value value="C"/>
+			<Value value="B"/>
+			<Value value="A"/>
+		</DataField>
+		<DataField name="pression" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="9.40000000000000E+001" rightMargin="2.00000000000000E+002"/>
+		</DataField>
+		<DataField name="cholester" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="1.26000000000000E+002" rightMargin="5.64000000000000E+002"/>
+		</DataField>
+		<DataField name="sucre" optype="categorical" dataType="string">
+			<Value value="A"/>
+			<Value value="B"/>
+		</DataField>
+		<DataField name="electro" optype="categorical" dataType="string">
+			<Value value="C"/>
+			<Value value="A"/>
+			<Value value="B"/>
+		</DataField>
+		<DataField name="taux_max" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="7.10000000000000E+001" rightMargin="2.02000000000000E+002"/>
+		</DataField>
+		<DataField name="angine" optype="categorical" dataType="string">
+			<Value value="non"/>
+			<Value value="oui"/>
+		</DataField>
+		<DataField name="depression" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="0.00000000000000E+000" rightMargin="6.19999980926514E+000"/>
+		</DataField>
+		<DataField name="pic" optype="continuous" dataType="double">
+			<Interval closure="closedClosed" leftMargin="1.00000000000000E+000" rightMargin="3.00000000000000E+000"/>
+		</DataField>
+		<DataField name="vaisseau" optype="categorical" dataType="string">
+			<Value value="D"/>
+			<Value value="A"/>
+			<Value value="B"/>
+			<Value value="C"/>
+		</DataField>
+		<DataField name="coeur" optype="categorical" dataType="string">
+			<Value value="presence"/>
+			<Value value="absence"/>
+		</DataField>
+	</DataDictionary>
+	<TreeModel modelName="DecisionTree" functionName="classification" splitCharacteristic="multiSplit" missingValueStrategy="lastPrediction" noTrueChildStrategy="returnNullPrediction">
+		<MiningSchema>
+			<MiningField name="age" invalidValueTreatment="asIs"/>
+			<MiningField name="sexe" invalidValueTreatment="asIs"/>
+			<MiningField name="type_douleur" invalidValueTreatment="asIs"/>
+			<MiningField name="pression" invalidValueTreatment="asIs"/>
+			<MiningField name="cholester" invalidValueTreatment="asIs"/>
+			<MiningField name="sucre" invalidValueTreatment="asIs"/>
+			<MiningField name="electro" invalidValueTreatment="asIs"/>
+			<MiningField name="taux_max" invalidValueTreatment="asIs"/>
+			<MiningField name="angine" invalidValueTreatment="asIs"/>
+			<MiningField name="depression" invalidValueTreatment="asIs"/>
+			<MiningField name="pic" invalidValueTreatment="asIs"/>
+			<MiningField name="vaisseau" invalidValueTreatment="asIs"/>
+			<MiningField name="coeur" invalidValueTreatment="asIs" usageType="target"/>
+		</MiningSchema>
+		<Node id="0" score="absence" recordCount="270.0">
+			<True/>
+			<ScoreDistribution value="presence" recordCount="120.0"/>
+			<ScoreDistribution value="absence" recordCount="150.0"/>
+			<Node id="1" score="presence" recordCount="129.0">
+				<SimpleSetPredicate field="type_douleur" booleanOperator="isIn">
+					<Array n="1" type="string">"D" </Array>
+				</SimpleSetPredicate>
+				<ScoreDistribution value="presence" recordCount="91.0"/>
+				<ScoreDistribution value="absence" recordCount="38.0"/>
+				<Node id="2" score="presence" recordCount="68.0">
+					<SimpleSetPredicate field="vaisseau" booleanOperator="isIn">
+						<Array n="3" type="string">"D" "B" "C" </Array>
+					</SimpleSetPredicate>
+					<ScoreDistribution value="presence" recordCount="63.0"/>
+					<ScoreDistribution value="absence" recordCount="5.0"/>
+				</Node>
+				<Node id="3" score="absence" recordCount="61.0">
+					<SimpleSetPredicate field="vaisseau" booleanOperator="isIn">
+						<Array n="1" type="string">"A" </Array>
+					</SimpleSetPredicate>
+					<ScoreDistribution value="presence" recordCount="28.0"/>
+					<ScoreDistribution value="absence" recordCount="33.0"/>
+					<Node id="4" score="absence" recordCount="30.0">
+						<SimplePredicate field="depression" operator="lessThan" value="7.00000047683716E-001"/>
+						<ScoreDistribution value="presence" recordCount="7.0"/>
+						<ScoreDistribution value="absence" recordCount="23.0"/>
+					</Node>
+					<Node id="5" score="presence" recordCount="31.0">
+						<SimplePredicate field="depression" operator="greaterOrEqual" value="7.00000047683716E-001"/>
+						<ScoreDistribution value="presence" recordCount="21.0"/>
+						<ScoreDistribution value="absence" recordCount="10.0"/>
+					</Node>
+				</Node>
+			</Node>
+			<Node id="6" score="absence" recordCount="141.0">
+				<SimpleSetPredicate field="type_douleur" booleanOperator="isIn">
+					<Array n="3" type="string">"C" "B" "A" </Array>
+				</SimpleSetPredicate>
+				<ScoreDistribution value="presence" recordCount="29.0"/>
+				<ScoreDistribution value="absence" recordCount="112.0"/>
+				<Node id="7" score="absence" recordCount="125.0">
+					<SimplePredicate field="depression" operator="lessThan" value="1.95000004768372E+000"/>
+					<ScoreDistribution value="presence" recordCount="19.0"/>
+					<ScoreDistribution value="absence" recordCount="106.0"/>
+				</Node>
+				<Node id="8" score="presence" recordCount="16.0">
+					<SimplePredicate field="depression" operator="greaterOrEqual" value="1.95000004768372E+000"/>
+					<ScoreDistribution value="presence" recordCount="10.0"/>
+					<ScoreDistribution value="absence" recordCount="6.0"/>
+				</Node>
+			</Node>
+		</Node>
+	</TreeModel>
+</PMML>
